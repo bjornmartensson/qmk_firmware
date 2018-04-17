@@ -11,41 +11,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   =    |   1  |   2  |   3  |   4  |   5  | LEFT |           | RIGHT|   6  |   7  |   8  |   9  |   0  |   -    |
+ * |   =    |   1  |   2  |   3  |   4  |   5  |>LEFT<|           |>RIGHT<|   6  |   7  |   8  |   9  |   0  |   -    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | Del    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L2  |   Y  |   U  |   I  |   O  |   P  |   /    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | BkSp   |A/Win |S/Shft|D/Ctrl|F/Alt |   G  |------|           |------|   H  |J/Alt |K/Ctrl|L/Shft|   ;  |   '    |
  * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
- * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1|  '"  |AltShf| Esc  |  Tab |                                       | Space| Enter|   [  |   ]  |    \  |
+ *   |CapsL |   `  | App  | Esc  |  Tab |                                       | Space| Enter|   [  |   ]  |    \  |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | App  | LGui |       | PgUp  | KC_UP |
- *                                 ,------|------|------|       |------+--------+------.
- *                                 |  1   |  2   | Home |       |KC_LEFT|KC_DOWN|KC_RIGHT|
- *                                 |------|------|------|       |------|--------|------|            
- *                                 | Space| BkSp | End  |       | PgDn |  Home  |  End |
+ *                                        |A+S+Ta| A+Tab|       | PgUp |  Up  |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 | Win  |C+S+Ta| C+Tab|       | Left | Down | Right|
+ *                                 |------|------|------|       |------|------|------|            
+ *                                 | Shift| Ctrl | Alt  |       | PgDn | Home | End  |
  *                                 `--------------------'       `----------------------'
+ *   Design considerations:
+ *   - Arrow key cluster with other movement keys: pgUp, PgDn, Home, End.
+ *   - Dedicated key for  ALT+TAB, ALT+SHIFT+TAB, CTRL+TAB, CTRL+SHIFT+TAB for quick window / tab switching.
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
 // Otherwise, it needs KC_*
 [BASE] = KEYMAP_80(  // layer 0 : default
         // left hand
-        KC_EQL            , KC_1         , KC_2           , KC_3         , KC_4         , KC_5  , KC_LEFT       , 
-        KC_DELT           , KC_Q         , KC_W           , KC_E         , KC_R         , KC_T  , TG(SYMB)      , 
-        KC_BSPC           , GUI_T(KC_A)  , SFT_T(KC_S)    , CTL_T(KC_D)  , ALT_T(KC_F)  , KC_G  , 
-        KC_LSFT           , CTL_T(KC_Z)  , KC_X           , KC_C         , KC_V         , KC_B  , ALL_T(KC_NO)  , 
-        LT(SYMB, KC_GRV)  , KC_QUOT      , LALT(KC_LSFT)  , KC_ESC       , KC_TAB       , 
-                                              ALT_T(KC_APP),  KC_LGUI,
-                                               KC_1,  KC_2,   KC_HOME,
-                                               KC_SPC,KC_BSPC,KC_END,
+        KC_EQL , KC_1        , KC_2           , KC_3         , KC_4         , KC_5  , KC_LEFT       , 
+        KC_DELT, KC_Q        , KC_W           , KC_E         , KC_R         , KC_T  , TG(SYMB)      , 
+        KC_BSPC, GUI_T(KC_A) , SFT_T(KC_S)    , CTL_T(KC_D)  , ALT_T(KC_F)  , KC_G  , 
+        KC_LSFT, KC_Z        , KC_X           , KC_C         , KC_V         , KC_B  , ALL_T(KC_NO)  , 
+        KC_CAPS, KC_GRV      , KC_APP         , KC_ESC       , KC_TAB       , 
+                                                       LALT(S(KC_TAB)), LALT(KC_TAB),
+                                              KC_LGUI, LCTL(S(KC_TAB)), LCTL(KC_TAB),
+                                              KC_LSFT, KC_LCTL        , KC_LALT,
         // right hand
-             KC_RGHT      , KC_6         , KC_7         , KC_8         , KC_9         , KC_0    , KC_MINS , 
-             TG(MDIA)     , KC_Y         , KC_U         , KC_I         , KC_O         , KC_P    , KC_SLSH , 
-                            KC_H         , ALGR_T(KC_J) , RCTL_T(KC_K) , RSFT_T(KC_L) , KC_SCLN , KC_QUOT , 
-             MEH_T(KC_NO) , KC_N         , KC_M         , KC_COMM      , KC_DOT       , KC_SLSH , KC_RSFT , 
+             KC_RGHT      , KC_6         , KC_7         , KC_8         , KC_9         , KC_0    , KC_MINS  , 
+             TG(MDIA)     , KC_Y         , KC_U         , KC_I         , KC_O         , KC_P    , KC_SLSH  , 
+                            KC_H         , ALGR_T(KC_J) , RCTL_T(KC_K) , RSFT_T(KC_L) , KC_SCLN , KC_QUOT  , 
+             MEH_T(KC_NO) , KC_N         , KC_M         , KC_COMM      , KC_DOT       , KC_SLSH , KC_RSFT  , 
                                            KC_SPC       , KC_ENT       , KC_LBRC      , KC_RBRC , KC_BSLASH, 
              KC_PGUP, KC_UP,
              KC_LEFT,KC_DOWN, KC_RIGHT,
