@@ -17,13 +17,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   =    |   1  |   2  |   3  |   4  |   5  | Hyper|           | Meh  |   6  |   7  |   8  |   9  |   0  |   -    |
+ * |   =    |   1  |   2  |   3  |   4  |   5  | Hyper|           | Meh  |   6  |   7  |   8  |   9  |   0  | ALT+F4 |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Del    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L2  |   Y  |   U  |   I  |   O  |   P  |   /    |
+ * | Del    |   '  |   ,  |   .  |   P  |   Y  |  L1  |           |  L2  |   F  |   G  |   C  |   R  |   L  |   /    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | BkSp   |A/Win |S/Shft|D/Ctrl|F/Alt |   G  |------|           |------|   H  |J/Alt |K/Ctrl|L/Shft|   ;  |   '    |
+ * | BkSp   |A/Win |O/Shft|E/Ctrl|U/Alt |   I  |------|           |------|   D  |H/Alt |T/Ctrl|N/Shft|   S  |   -    |
  * |--------+------+------+------+------+------|  (   |           |   )  |------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |  [ { |           | } ]  |   N  |   M  |   ,  |   .  |   /  | RShift |
+ * | LShift |   ;  |   Q  |   J  |   V  |   X  |  [ { |           | } ]  |   B  |   M  |   W  |   V  |   Z  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |CapsL |   `  | App  | Esc  |  Tab |                                       | Space| Enter|   [  |   ]  |    \   |
  *   `----------------------------------'                                       `----------------------------------'
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Otherwise, it needs KC_*
 [BASE] = KEYMAP_80(  // layer 0 : default
         // left hand
-        KC_EQL , KC_1        , KC_2           , KC_3         , KC_4         , KC_5  , ALL_T(KC_NO)  , 
+        KC_RBRC, KC_1        , KC_2           , KC_3         , KC_4         , KC_5  , ALL_T(KC_NO)  , 
         KC_DELT, KC_Q        , KC_W           , KC_E         , KC_R         , KC_T  , TG(SYMB)      , 
         KC_BSPC, GUI_T(KC_A) , SFT_T(KC_S)    , CTL_T(KC_D)  , ALT_T(KC_F)  , KC_G  , 
         KC_LSFT, KC_Z        , KC_X           , KC_C         , KC_V         , KC_B  , TD(CT_LBP)    , 
@@ -53,8 +53,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                               KC_LGUI, LCTL(S(KC_TAB)), LCTL(KC_TAB),
                                               KC_LSFT, KC_LCTL        , KC_LALT,
         // right hand
-             MEH_T(KC_NO) , KC_6         , KC_7         , KC_8         , KC_9         , KC_0    , KC_MINS  , 
-             TG(MDIA)     , KC_Y         , KC_U         , KC_I         , KC_O         , KC_P    , KC_SLSH  , 
+             MEH_T(KC_NO) , KC_6         , KC_7         , KC_8         , KC_9         , KC_0    , LALT(KC_F4), 
+             TG(MDIA)     , KC_Y         , KC_U         , KC_I         , KC_O         , KC_P    , KC_LBRC  , 
                             KC_H         , ALGR_T(KC_J) , RCTL_T(KC_K) , RSFT_T(KC_L) , KC_SCLN , KC_QUOT  , 
              TD(CT_RBP)   , KC_N         , KC_M         , KC_COMM      , KC_DOT       , KC_SLSH , KC_RSFT  , 
                                            KC_SPC       , KC_ENT       , KC_LBRC      , KC_RBRC , KC_BSLASH, 
@@ -150,20 +150,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // TODO Can this be removed?
 const uint16_t PROGMEM fn_actions[] = {
     [1] = ACTION_LAYER_TAP_TOGGLE(SYMB)                // FN1 - Momentary Layer 1 (Symbols)
-};
-
-// TODO Remove this.
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  // MACRODOWN only works in this function
-      switch(id) {
-        case 0:
-        if (record->event.pressed) {
-          SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-        }
-        break;
-      }
-    return MACRO_NONE;
 };
 
 static void
