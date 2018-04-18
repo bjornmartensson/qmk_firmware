@@ -170,23 +170,19 @@ static void
 _td_brackets_finished (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (state->keycode == TD(CT_LBP))
-      register_code16 (KC_LBRC);
+      register_code16 (S(KC_9));
     else
-      register_code16 (KC_RBRC);
+      register_code16 (S(KC_0));
   } else if (state->count == 2) {
     if (state->keycode == TD(CT_LBP))
-      register_code16 (KC_LPRN);
+      register_code16 (KC_MINUS);
     else
-      register_code16 (KC_RPRN);
+      register_code16 (KC_EQUAL);
   } else if (state->count == 3) {
-    unicode_input_start();
-
     if (state->keycode == TD(CT_LBP))
-      register_hex (0x300c);
+      register_code16 (S(KC_MINUS));
     else
-      register_hex (0x300d);
-
-    unicode_input_finish();
+      register_code16 (S(KC_EQUAL));
   }
 }
 
@@ -194,14 +190,19 @@ static void
 _td_brackets_reset (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (state->keycode == TD(CT_LBP))
-      unregister_code16 (KC_LBRC);
+      unregister_code16 (S(KC_9));
     else
-      unregister_code16 (KC_RBRC);
+      unregister_code16 (S(KC_0));
   } else if (state->count == 2) {
     if (state->keycode == TD(CT_LBP))
-      unregister_code16 (KC_LPRN);
+      unregister_code16 (KC_MINUS);
     else
-      unregister_code16 (KC_RPRN);
+      unregister_code16 (KC_EQUAL);
+  } else if (state->count == 3) {
+    if (state->keycode == TD(CT_LBP))
+      unregister_code16 (S(KC_MINUS));
+    else
+      unregister_code16 (S(KC_EQUAL));
   }
 }
 
